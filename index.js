@@ -19,6 +19,7 @@ async function run(){
     try {
         await client.connect();
         const partsCollection = client.db('assignment-12').collection('parts');
+        const usersCollection = client.db('assignment-12').collection('user');
         
     
         app.get('/parts', async (req, res) => {
@@ -36,9 +37,8 @@ async function run(){
             res.send(item);
         })
 
-        // // for update
-        // app.put('/items/:id', async (req, res)=>{
-        //     const id = req.params.id;
+        // for update
+        // app.patch('/items/:id', async (req, res)=>{
         //     const updateItem = req.body;
         //     console.log(updateItem);
         //     const filter = {_id: ObjectId(id)};
@@ -51,12 +51,12 @@ async function run(){
         //     const result = await itemCollection.updateOne(filter,updateQuantity,options);
         //     res.send(result);
         // })
-        // // for adding one item
-        // app.post('/items', async (req, res)=>{
-        //     const newItem = req.body;
-        //     const result = await itemCollection.insertOne(newItem);
-        //     res.send(result);
-        // })
+        // for adding one item
+        app.post('/users', async (req, res)=>{
+            const newItem = req.body;
+            const result = await usersCollection.insertOne(newItem);
+            res.send(result);
+        })
         
         // app.delete('/items/:id', async (req, res)=>{
         //     const id = req.params.id;
