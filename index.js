@@ -21,12 +21,12 @@ async function run(){
         const partsCollection = client.db('assignment-12').collection('parts');
         
     
-        // app.get('/parts', async (req, res) => {
-        //     const query = {};
-        //     const cursor = partsCollection.find(query);
-        //     const items = await cursor.toArray();
-        //     res.send(items);
-        // });
+        app.get('/parts', async (req, res) => {
+            const query = {};
+            const cursor = partsCollection.find(query);
+            const items = await cursor.toArray();
+            res.send(items);
+        });
         // for finding one
         // app.get('/items/:id', async (req, res) => {
         //     const id = req.params.id;
