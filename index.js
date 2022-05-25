@@ -38,19 +38,19 @@ async function run(){
         })
 
         // for update
-        // app.patch('/items/:id', async (req, res)=>{
-        //     const updateItem = req.body;
-        //     console.log(updateItem);
-        //     const filter = {_id: ObjectId(id)};
-        //     const options = { upsert: true };
-        //     const updateQuantity = {
-        //         $set:{
-        //             quantity: updateItem.quantity
-        //         },
-        //     };
-        //     const result = await itemCollection.updateOne(filter,updateQuantity,options);
-        //     res.send(result);
-        // })
+        app.patch('/parts/:id', async (req, res)=>{
+            const updateItem = req.body;
+            const filter = {_id: ObjectId(id)};
+            const options = { upsert: true };
+            const updateQuantity = {
+                $set:{
+                    available: updateItem.available
+                },
+            };
+            const result = await partsCollection.updateOne(filter,updateQuantity,options);
+            res.send(result);
+        })
+        
         // for inserting one item
         app.post('/user', async (req, res)=>{
             const newItem = req.body;
