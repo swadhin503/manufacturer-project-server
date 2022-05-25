@@ -19,7 +19,7 @@ async function run(){
     try {
         await client.connect();
         const partsCollection = client.db('assignment-12').collection('parts');
-        const usersCollection = client.db('assignment-12').collection('user');
+        const usersCollection = client.db('assignment-12').collection('users');
         
     
         app.get('/parts', async (req, res) => {
@@ -51,10 +51,11 @@ async function run(){
         //     const result = await itemCollection.updateOne(filter,updateQuantity,options);
         //     res.send(result);
         // })
-        // for adding one item
-        app.post('/users', async (req, res)=>{
+        // for inserting one item
+        app.post('/user', async (req, res)=>{
             const newItem = req.body;
             const result = await usersCollection.insertOne(newItem);
+            // console.log(newItem);
             res.send(result);
         })
         
@@ -64,7 +65,7 @@ async function run(){
         //     const result = await itemCollection.deleteOne(query);
         //     res.send(result);
         // })
-
+    
     }
     finally {
 
