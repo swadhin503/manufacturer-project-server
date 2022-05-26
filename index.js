@@ -20,7 +20,7 @@ async function run(){
         await client.connect();
         const partsCollection = client.db('assignment-12').collection('parts');
         const usersCollection = client.db('assignment-12').collection('users');
-        const OrdersCollection = client.db('assignment-12').collection('orders');
+        const ordersCollection = client.db('assignment-12').collection('orders');
         
     
         app.get('/parts', async (req, res) => {
@@ -60,6 +60,15 @@ async function run(){
             // console.log(newItem);
             res.send(result);
         })
+        
+        // for inserting one item in orders collection
+        app.post('/order', async (req, res)=>{
+            const newItem = req.body;
+            const result = await ordersCollection.insertOne(newItem);
+            // console.log(newItem);
+            res.send(result);
+        })
+        
         
         // app.delete('/items/:id', async (req, res)=>{
         //     const id = req.params.id;
