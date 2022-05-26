@@ -20,6 +20,7 @@ async function run(){
         await client.connect();
         const partsCollection = client.db('assignment-12').collection('parts');
         const usersCollection = client.db('assignment-12').collection('users');
+        const OrdersCollection = client.db('assignment-12').collection('orders');
         
     
         app.get('/parts', async (req, res) => {
@@ -38,7 +39,8 @@ async function run(){
         })
 
         // for update
-        app.patch('/parts/:id', async (req, res)=>{
+        app.put('/parts/:id', async (req, res)=>{
+            const id = req.params.id;
             const updateItem = req.body;
             const filter = {_id: ObjectId(id)};
             const options = { upsert: true };
