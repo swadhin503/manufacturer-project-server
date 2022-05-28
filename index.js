@@ -167,12 +167,20 @@ async function run(){
             const decodedEmail = req.decoded.email;
             if(email === decodedEmail){
                 const query = {email:email};
-                const orders = await ordersCollection.findOne(query);
+                const orders = await ordersCollection.find(query).toArray();
                 return res.send(orders);
             }
             else{
                 return res.status(403).send({message: 'Forbidden access'})
             }
+        })
+        app.get('/order/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)};
+            const orders = await ordersCollection.findOne(query);
+            return res.send(orders);
+              
+           
         })
         // app.delete('/items/:id', async (req, res)=>{
         //     const id = req.params.id;
