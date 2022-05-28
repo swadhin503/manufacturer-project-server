@@ -57,7 +57,12 @@ async function run(){
             const result = await partsCollection.insertOne(newItem);
             res.send(result);
         })
-
+        app.delete('/parts/:id', async (req, res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await partsCollection.deleteOne(query);
+            res.send(result);
+        })
         // for update
         app.put('/parts/:id', async (req, res)=>{
             const id = req.params.id;
@@ -86,6 +91,22 @@ async function run(){
             // console.log(newItem);
             var token = jwt.sign({ email:email }, process.env.ACCESS_TOKEN_SECRET,{expiresIn:'1d'});
             res.send({result,token});
+        })
+        app.put('/user/:email', async (req, res)=>{
+            const email = req.params.email;
+            const user = req.body;
+            const filter = {email: email};
+            const options = {upsert: true};
+            const updateDoc = {
+                $set:user,
+            };
+            const result = await usersCollection.updateOne(filter,updateDoc,options);
+            res.send(result);
+        })
+        app.get('/user/:email', async (req, res) => {
+            const email = req.params.email;
+            const result = await usersCollection.findOne({ email: email });
+            res.send(result);
         })
         // for admin
         app.put('/user/admin/:email',verifyJWT, async (req, res)=>{
@@ -146,7 +167,7 @@ async function run(){
             const decodedEmail = req.decoded.email;
             if(email === decodedEmail){
                 const query = {email:email};
-                const orders = await ordersCollection.find(query).toArray();
+                const orders = await ordersCollection.findOne(query);
                 return res.send(orders);
             }
             else{
